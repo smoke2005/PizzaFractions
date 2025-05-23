@@ -472,13 +472,29 @@ body {
     box-shadow: 0 2px 8px #b97a5633;
 }
 .intro-container {
-    background: #f9e6d3;
+    background: url('/static/intro-bg.png') center/cover no-repeat;
+    position: relative;
     min-height: 100vh;
     padding: 40px 20px;
     text-align: center;
 }
 
+/* Add overlay for better text readability */
+.intro-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(249, 230, 211, 0.7);  /* Changed from 0.85 to 0.7 */
+    z-index: 1;
+}
+
+/* For more opacity (less background visibility), use 0.9+ value instead */
 .intro-content {
+    position: relative;
+    z-index: 2;
     max-width: 800px;
     margin: 0 auto;
     padding: 30px;
@@ -488,7 +504,11 @@ body {
 }
 
 .intro-container h1 {
-    color: #a14c1a;
+    position: relative;
+    z-index: 3; /* Higher than overlay's z-index */
+    color: #b97a56;  /* Brighter orange color */
+    text-shadow: 2px 2px 4px rgba(255, 255, 210, 0.8),
+                 0 0 20px rgba(255, 165, 0, 0.5);
     font-family: 'Fredoka One', cursive;
     font-size: 2.5rem;
     margin-bottom: 40px;
@@ -542,3 +562,41 @@ body {
     background: #b97a56;
     color: white;
 }
+
+.canvas-container {
+    position: relative;
+}
+
+/* Add spacing to dragged ingredients */
+.draggable-ingredient {
+    margin: 8px;
+    transform: translate(calc(-50% + 5px), calc(-50% + 5px));
+}
+.slice {
+    position: relative;
+    overflow: visible;
+}
+
+/* Auto-placement positions */
+.slice .ingredient-clone {
+    position: absolute;
+    animation: ingredientSpread 0.5s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ingredientSpread {
+    0% {
+        transform: scale(0) translate(0,0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translate(var(--tx), var(--ty));
+        opacity: 1;
+    }
+}
+
+/* Generate random spread positions using CSS variables */
+.slice .ingredient-clone:nth-child(1) { --tx: 8px; --ty: -5px; }
+.slice .ingredient-clone:nth-child(2) { --tx: -6px; --ty: 7px; }
+.slice .ingredient-clone:nth-child(3) { --tx: 5px; --ty: 6px; }
+.slice .ingredient-clone:nth-child(4) { --tx: -7px; --ty: -4px; }
