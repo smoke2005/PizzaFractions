@@ -41,22 +41,22 @@
                     
                     <!-- LCM Input Section -->
                     <div id="lcmInputArea">
-                        <p>Into how many equal slices should we cut the pizza?</p>
+                        <p style="font-size: 1.1em;font-weight: bold;">Into how many equal slices should we cut the pizza?</p>
                         <input type="number" id="lcmInput" placeholder="LCM?" />
                         <button onclick="checkLCM()">Cut Pizza</button>
                     </div>
 
                     <!-- Conversion Panel -->
                     <div id="convertPanel" style="display:none;">
-                        <p>Convert fractions to common denominator <strong><span id="denominatorDisplay"></span></strong>:</p>
-                        <div>
+                        <p style="font-size: 1.1em;font-weight: bold;">Convert fractions to common denominator <strong><span id="denominatorDisplay"></span></strong>:</p>
+                        <div style="font-size: 1.1em;">
                             <div>
                                 <label><span id="fracNum1"></span>/<span id="fracDen1"></span> = </label>
-                                <input type="number" id="convNum1" min="0" /> / <span id="convDen1"></span>
+                                <input type="number" id="convNum1" min="0" style="font-size: 1em;" /> / <span id="convDen1"></span>
                             </div>
                             <div>
                                 <label><span id="fracNum2"></span>/<span id="fracDen2"></span> = </label>
-                                <input type="number" id="convNum2" min="0" /> / <span id="convDen2"></span>
+                                <input type="number" id="convNum2" min="0" style="font-size: 1em;" /> / <span id="convDen2"></span>
                             </div>
                         </div>
                         <button onclick="checkConversion()">Submit Conversion</button>
@@ -64,7 +64,7 @@
 
                     <!-- Topping Area -->
                     <div id="toppingArea" style="display:none;">
-                        <p>Drag toppings onto the pizza slices to match the sum fraction.</p>
+                        <p style="font-size: 1.1em;font-weight: bold;">Drag toppings onto the pizza slices to match the sum fraction.</p>
                         <div id="slicesContainer"></div>
                         <div class="button-group">
                             <button onclick="checkToppings()">Submit Toppings</button>
