@@ -1,0 +1,683 @@
+body {
+    font-family: 'Indie Flower', 'Fredoka One', Arial, sans-serif;
+    background: #f9e6d3;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+  .pizza-shop-header {
+    background: #e6b07a;
+    border-bottom: 4px solid #b97a56;
+    padding: 16px 0 8px 0;
+    text-align: center;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    font-size: 2.2em;
+    color: #a14c1a;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 8px #b97a5633;
+  }
+  .background-container {
+    background: url('/static/bg-pattern.png') no-repeat top center; /* Position image at the top center */
+    background-size: 100% 420px; /* Set specific width and reduced height */
+    padding: 32px 0; /* Add padding for spacing */
+  }
+  
+  .main-area {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 50px;
+    margin: 0 auto;
+    max-width: 1300px;
+    /* Remove background image from here */
+  }
+  .ingredient-area {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    grid-template-rows: repeat(3, 70px);
+    gap: 12px;
+    background: #f5d6b2;
+    border: 4px solid #b97a56;
+    border-radius: 18px;
+    padding: 18px;
+    margin-left: 40;
+    box-shadow: 0 2px 8px #b97a5633;
+  }
+  .ingredient-bin {
+    background: linear-gradient(145deg, #fff8e1, #f5d6b2);
+    border: 2px solid #b97a56;
+    border-radius: 15px;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2em;
+    box-shadow: 0 4px 8px #b97a5633;
+    transition: all 0.3s ease;
+    cursor: grab;
+}
+
+.ingredient-bin:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 15px #b97a5666;
+    background: #fff8e1;
+    border: 2px solid #b97a56;
+    border-radius: 12px;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    box-shadow: 0 1px 4px #b97a5633;
+  }
+  .pizza-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background: url('/static/pizza-board.png') no-repeat center -100px; /* Adjust position to center */
+    background-size: 600px 600px; /* Ensure the image fits the area */
+    height: 500px;
+    width: 500px; /* Match canvas width */
+    margin: -20px 0 -20px ;
+    z-index: 1; /* Set z-index to ensure it is above the background */
+}
+
+  .pizza-peel {
+    display: none; /* Hide the existing pizza peel */
+  }
+  canvas {
+    background: radial-gradient(circle at 60% 60%, #ffe0b3 80%, #ffd180 100%);
+    border-radius: 50%;
+    margin: 40px auto;
+    display: block;
+    box-shadow: 0 4px 24px #b97a5633;
+    border: 6px solid #e6b07a;
+    position: relative;
+    z-index: 2;
+  }
+  .box {
+    background: #fff8e1;
+    border: 3px solid #b97a56;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px #b97a5633;
+    padding: 24px 18px 18px 18px;
+    margin: 70px auto 24px auto;
+    max-width: 420px;
+    font-size: 1.1em;
+    color: #a14c1a;
+  }
+  button {
+    background: #e6b07a;
+    color: #a14c1a;
+    border: 2px solid #b97a56;
+    border-radius: 10px;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    font-size: 1.1em;
+    padding: 10px 24px;
+    margin: 10px 6px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px #b97a5633;
+    transition: background 0.2s, transform 0.1s;
+  }
+  button:hover, button:focus {
+    background: #f5d6b2;
+    transform: scale(1.04);
+  }
+  input[type=number] {
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 2px solid #e6b07a;
+    background: #fffbe7;
+    margin: 0 4px;
+    width: 60px;
+    text-align: center;
+  }
+  #feedback {
+    font-size: 1.1em;
+    margin-top: 10px;
+    color: #a14c1a;
+    min-height: 32px;
+  }
+  /* Slices styling can be further customized for hand-drawn look */
+  .slice {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: #ffd180;
+    margin: 3px;
+    border-radius: 50% 50% 50% 50% / 100% 100% 0 0;
+    cursor: pointer;
+    border: 2px solid #b97a56;
+    box-shadow: 0 1px 2px #b97a5633;
+    transition: transform 0.12s, box-shadow 0.2s;
+  }
+  .slice.topped {
+    background: #ffa726;
+    border-color: #a14c1a;
+    animation: pop 0.18s;
+  }
+  @keyframes pop {
+    0% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  
+  /* Add these rules to improve conversion panel visibility */
+  #convertPanel {
+    margin: 20px 0;
+    padding: 15px;
+    background: #fff3e0;
+    border-radius: 12px;
+  }
+  
+  /* Better visual hierarchy for conversion inputs */
+  #convertPanel input[type=number] {
+    width: 50px;
+    margin: 0 5px;
+  }
+  
+  /* Clearer visual feedback for disabled elements */
+  #lcmInputArea[disabled], #convertPanel[disabled] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  /* Add smooth transitions for panel changes */
+  #lcmInputArea, #convertPanel, #toppingArea {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Better spacing for conversion elements */
+  .conversion-row {
+    margin: 10px 0;
+  }
+  
+  .steps-container {
+      display: flex;
+      gap: 30px;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      justify-content: center;
+      z-index: 1000;
+      background: rgba(249, 230, 211, 0.95);
+      border: 3px solid #b97a56;
+      border-radius: 15px;
+      padding: 20px;
+      width: 1000px;
+      box-shadow: 0 -4px 20px rgba(185, 122, 86, 0.2);
+  }
+  
+  .step-box {
+      flex: 1;
+      background: #fff8e1;
+      border: 3px solid #b97a56;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(185, 122, 86, 0.2);
+      min-height: 220px;
+      margin: 0;
+      transition: all 0.3s ease;
+      position: relative;
+  }
+
+  .step-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(185, 122, 86, 0.3);
+  }
+  
+  #lcmInputArea {
+      min-height: 280px;
+      position: relative;
+      flex: 0 0 350px;
+  }
+  
+  #fractionBox {
+      font-size: 1.4em;
+      color: #a14c1a;
+      padding: 15px;
+      margin: 0 0 20px 0;
+      background: #fff3e0;
+      border: 2px solid #ff8c00;
+      border-radius: 8px;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      font-family: 'Fredoka One', cursive;
+      text-align: center;
+  }
+  .score-display {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #e6b07a;
+      border: 3px solid #b97a56;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5em;
+      color: #a14c1a;
+      z-index: 100;
+      box-shadow: 0 2px 8px #b97a5633;
+  }
+
+.celebration-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.celebration-content {
+    background: #fff8e1;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.pizza-dance-gif {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.celebration-button {
+    background: #e6b07a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.2em;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.3s;
+}
+
+.celebration-button:hover {
+    transform: scale(1.1);
+    background: white;
+    color: #ff8c00;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.celebration-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.chef-container {
+    position: absolute;
+    right: -20px;
+    top: 53%;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+
+.chef-image {
+    width: 400px;
+    height: auto;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+}
+
+.thought-bubble {
+    position: absolute;
+    top: -180px;
+    right: 100px;
+    width: 200px;
+}
+
+.thought-bubble img {
+    width: 100%;
+    height: auto;
+}
+.main-area {
+    display: flex;
+    justify-content: flex-start; /* Changed from center to flex-start */
+    align-items: flex-start;
+    gap: 50px;
+    margin: 0 auto;
+    max-width: 1300px;
+    padding: 0 20px;
+}
+
+.orders-container {
+    background: #fff8e1;
+    border: 4px solid #b97a56;
+    border-radius: 18px;
+    padding: 15px;
+    width: 200px;
+    height: 300px;
+    box-shadow: 0 2px 8px #b97a5633;
+    margin-right: 0; /* Set margin-right to 0 to move further left */
+}
+
+.pizza-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background: url('/static/pizza-board.png') no-repeat center -100px;
+    background-size: 600px 600px;
+    height: 500px;
+    width: 500px;
+    margin: -20px 0 -20px -30px; /* Adjusted left margin to move right */
+    z-index: 1;
+}
+
+.ingredient-area {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    grid-template-rows: repeat(3, 70px);
+    gap: 12px;
+    background: #f5d6b2;
+    border: 4px solid #b97a56;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 2px 8px #b97a5633;
+    margin: 20px 0 -20px 30px; /* Further added margin-left to move left */
+}
+
+.orders-container h3 {
+    color: #a14c1a;
+    font-family: 'Fredoka One', cursive;
+    margin-top: 0;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+#ordersList {
+    height: 350px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.order-item {
+    background: #f5d6b2;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    border: 2px solid #e6b07a;
+}
+
+/* Add these new styles at the bottom */
+.oven-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.oven-content {
+    background: #fff3e0;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    animation: cook 2s linear infinite;
+}
+
+.oven-emoji {
+    width: 100px;
+    height: 100px;
+    /* Remove animation to keep the gif static */
+    /* animation: bake 2s ease-in-out infinite; */
+}
+
+@keyframes bake {
+    0% { transform: rotate(0deg) scale(0.9); }
+    50% { transform: rotate(10deg) scale(1.1); }
+    100% { transform: rotate(0deg) scale(0.9); }
+}
+
+@keyframes cook {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes flame {
+    from { transform: scale(1); }
+    to { transform: scale(1.2) rotate(-5deg); }
+}
+
+/* Keep your existing styles below */
+.pizza-shop-header {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    color: #a14c1a;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 8px #b97a5633;
+}
+.intro-container {
+    background: url('/static/intro-bg.png') center/cover no-repeat;
+    position: relative;
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Add overlay for better text readability */
+.intro-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(249, 230, 211, 0.7);  /* Changed from 0.85 to 0.7 */
+    z-index: 1;
+}
+
+/* For more opacity (less background visibility), use 0.9+ value instead */
+.intro-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #fff8e1;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.intro-container h1 {
+    position: relative;
+    z-index: 3; /* Higher than overlay's z-index */
+    color: #b97a56;  /* Brighter orange color */
+    text-shadow: 2px 2px 4px rgba(255, 255, 210, 0.8),
+                 0 0 20px rgba(255, 165, 0, 0.5);
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.instructions {
+    background: #fff3e0;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 30px;
+}
+
+.instructions h2 {
+    color: #b97a56;
+    font-family: 'Indie Flower', cursive;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.instructions ul {
+    list-style: none;
+    padding: 0;
+    font-size: 1.2rem;
+    text-align: left;
+    margin: 25px 0;
+}
+
+.instructions li {
+    padding: 12px;
+    margin: 10px 0;
+    background: #f5d6b2;
+    border-radius: 8px;
+    font-family: 'Fredoka One', cursive;
+}
+
+.start-button {
+    display: inline-block;
+    background: #e6b07a;
+    color: #a14c1a;
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: transform 0.3s;
+    border: 3px solid #b97a56;
+    margin-top: 20px;
+}
+
+.start-button:hover {
+    transform: scale(1.05);
+    background: #b97a56;
+    color: white;
+}
+
+.canvas-container {
+    position: relative;
+}
+
+/* Add spacing to dragged ingredients */
+.draggable-ingredient {
+    margin: 8px;
+    transform: translate(calc(-50% + 5px), calc(-50% + 5px));
+}
+.slice {
+    position: relative;
+    overflow: visible;
+}
+
+/* Auto-placement positions */
+.ingredient-clone {
+    position: absolute;
+    animation: ingredientSpread 0.5s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ingredientSpread {
+    0% {
+        transform: scale(0) translate(0,0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translate(var(--tx), var(--ty));
+        opacity: 1;
+    }
+}
+
+/* Generate random spread positions using CSS variables */
+.ingredient-clone:nth-child(1) { --tx: 8px; --ty: -5px; }
+.ingredient-clone:nth-child(2) { --tx: -6px; --ty: 7px; }
+.ingredient-clone:nth-child(3) { --tx: 5px; --ty: 6px; }
+.ingredient-clone:nth-child(4) { --tx: -7px; --ty: -4px; }
+
+.whiteboard-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: repeating-linear-gradient(
+        to bottom,
+        #fff 0px,
+        #fff 34px,
+        #f9e6d3 35px,
+        #f9e6d3 36px
+    );
+    border: 3px solid #b97a56;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px #b97a5633;
+    padding: 18px 12px 12px 12px;
+    margin-right: 0;
+    margin-left: 200px;
+    margin-top: -50px;
+    min-width: 260px;
+    max-width: 340px;
+    min-height: 400px;
+    height: 480px;
+    resize: horizontal;
+    overflow: auto;
+}
+
+.whiteboard-title {
+    font-family: 'Fredoka One', cursive;
+    color: #a14c1a;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+#whiteboard-canvas {
+    background: #fff;
+    border: 2px solid #e6b07a;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px #b97a5633;
+    cursor: crosshair;
+    /* Remove width and height from CSS */
+    touch-action: none;
+    display: block;
+}
+
+.whiteboard-controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.whiteboard-btn {
+    background: #e6b07a;
+    color: #a14c1a;
+    border: 2px solid #b97a56;
+    border-radius: 8px;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    font-size: 1em;
+    padding: 6px 18px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px #b97a5633;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.whiteboard-btn:hover, .whiteboard-btn:focus {
+    background: #f5d6b2;
+    transform: scale(1.04);
+}

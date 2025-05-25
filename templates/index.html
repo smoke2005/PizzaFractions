@@ -1,457 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pizza Fraction Party — Convert & Drag</title>
-<link rel="stylesheet" type="text/css" href="/static/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Indie+Flower&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pizza Fraction Party — Convert & Drag</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Indie+Flower&display=swap" rel="stylesheet">
 </head> 
 <body>
-  <div class="pizza-shop-header">🍕 Pizza Fraction Party</div>
-  <div class="score-display">
-    Score: <span id="score">0</span>
-  </div>
-  <div class="background-container">
-    <div class="main-area">
-      <!-- Add this new orders container -->
-      <div class="orders-container">
-          <h3>🍕 Current Orders</h3>
-          <div id="ordersList"></div>
-      </div>
-      
-      <!-- Existing ingredient area -->
-      <div class="ingredient-area">
-        <div class="ingredient-bin" draggable="true" data-emoji="🧅">🧅</div>
-        <div class="ingredient-bin" draggable="true" data-emoji="🫑">🫑</div>
-        <div class="ingredient-bin" draggable="true" data-emoji="🧀">🧀</div>
-        <div class="ingredient-bin" draggable="true" data-emoji="🍄">🍄</div>
-        <div class="ingredient-bin" draggable="true" data-emoji="🍅">🍅</div>
-        <div class="ingredient-bin" draggable="true" data-emoji="🥓">🥓</div>
-        <div class="ingredient-bin" draggable="true" data-emoji="🍗">🍗</div>
-        <div class="ingredient-bin" draggable="true" data-emoji="🫒">🫒</div>
-        <div class="ingredient-bin" draggable="true" data-emoji="🌶️">🌶️</div>
-      </div>
-      <div class="pizza-area">
-        <div class="pizza-peel"></div>
-        <canvas id="pizzaCanvas" width="300" height="300"></canvas>
-        <div class="box">
-          <div id="fractionBox"></div>
-          <div id="lcmInputArea">
-            <p>Into how many equal slices should we cut the pizza?</p>
-            <input type="number" id="lcmInput" placeholder="LCM?" />
-            <button onclick="checkLCM()">Cut Pizza</button>
-          </div>
-          <div id="convertPanel" style="display:none;">
-            <p>Convert fractions to common denominator <strong><span id="denominatorDisplay"></span></strong>:</p>
-            <div>
-              <label>
-                <span id="labelNum1"></span>/<span id="labelDen1"></span> = 
-              </label>
-              <div>
-                <label><span id="fracNum1"></span>/<span id="fracDen1"></span> = </label>
-                <input type="number" id="convNum1" min="0" /> / <span id="convDen1"></span>
-              </div>
-              <div>
-                <label><span id="fracNum2"></span>/<span id="fracDen2"></span> = </label>
-                <input type="number" id="convNum2" min="0" /> / <span id="convDen2"></span>
-              </div>
+    <div class="pizza-shop-header">🍕 Pizza Fraction Party</div>
+    <div class="score-display">Score: <span id="score">0</span></div>
+
+    <div class="background-container">
+        <div class="main-area">
+            <!-- Orders Container -->
+            <div class="orders-container">
+                <h3>🍕 Current Orders</h3>
+                <div id="ordersList"></div>
             </div>
-            <button onclick="checkConversion()">Submit Conversion</button>
-          </div>
-          <div id="toppingArea" style="display:none;">
-            <p>Drag toppings onto the pizza slices to match the sum fraction.</p>
-            <div id="slicesContainer"></div>
-            <div class="button-group">
-              <button onclick="checkToppings()">Submit Toppings</button>
-              <button onclick="loadQuestion()" id="nextQuestionBtn" style="display:none; margin-left:10px;">Next Question ➡️</button>
+            
+            <!-- Ingredient Area -->
+            <div class="ingredient-area">
+                <div class="ingredient-bin" draggable="true" data-emoji="🧅">🧅</div>
+                <div class="ingredient-bin" draggable="true" data-emoji="🫑">🫑</div>
+                <div class="ingredient-bin" draggable="true" data-emoji="🧀">🧀</div>
+                <div class="ingredient-bin" draggable="true" data-emoji="🍄">🍄</div>
+                <div class="ingredient-bin" draggable="true" data-emoji="🍅">🍅</div>
+                <div class="ingredient-bin" draggable="true" data-emoji="🥓">🥓</div>
+                <div class="ingredient-bin" draggable="true" data-emoji="🍗">🍗</div>
+                <div class="ingredient-bin" draggable="true" data-emoji="🫒">🫒</div>
+                <div class="ingredient-bin" draggable="true" data-emoji="🌶️">🌶️</div>
             </div>
-          </div>
-          <p id="feedback"></p>
+
+            <!-- Pizza Area -->
+            <div class="pizza-area">
+                <div class="pizza-peel"></div>
+                <canvas id="pizzaCanvas" width="300" height="300"></canvas>
+                <div class="box">
+                    <div id="fractionBox"></div>
+                    
+                    <!-- LCM Input Section -->
+                    <div id="lcmInputArea">
+                        <p>Into how many equal slices should we cut the pizza?</p>
+                        <input type="number" id="lcmInput" placeholder="LCM?" />
+                        <button onclick="checkLCM()">Cut Pizza</button>
+                    </div>
+
+                    <!-- Conversion Panel -->
+                    <div id="convertPanel" style="display:none;">
+                        <p>Convert fractions to common denominator <strong><span id="denominatorDisplay"></span></strong>:</p>
+                        <div>
+                            <div>
+                                <label><span id="fracNum1"></span>/<span id="fracDen1"></span> = </label>
+                                <input type="number" id="convNum1" min="0" /> / <span id="convDen1"></span>
+                            </div>
+                            <div>
+                                <label><span id="fracNum2"></span>/<span id="fracDen2"></span> = </label>
+                                <input type="number" id="convNum2" min="0" /> / <span id="convDen2"></span>
+                            </div>
+                        </div>
+                        <button onclick="checkConversion()">Submit Conversion</button>
+                    </div>
+
+                    <!-- Topping Area -->
+                    <div id="toppingArea" style="display:none;">
+                        <p>Drag toppings onto the pizza slices to match the sum fraction.</p>
+                        <div id="slicesContainer"></div>
+                        <div class="button-group">
+                            <button onclick="checkToppings()">Submit Toppings</button>
+                            <button onclick="loadQuestion()" id="nextQuestionBtn" style="display:none; margin-left:10px;">Next Question ➡️</button>
+                        </div>
+                    </div>
+                    <p id="feedback"></p>
+                </div>
+            </div>
+
+            <!-- Chef Container -->
+            <div class="chef-container">
+                <img src="/static/chef.png" alt="Pizza Chef" class="chef-image">
+                <div class="thought-bubble">
+                    <img src="/static/thought-bubble.png" alt="Thought Bubble" style="width: 200px; height: auto;">
+                    <div class="thought-bubble-text"
+                         style="position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);
+                                width:70%;text-align:center;color:#a14c1a;
+                                font-family:'Indie Flower',cursive,sans-serif;font-size:1.1em;line-height:1.2;
+                                font-weight:bold;">
+                        Get your math mitts on!
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="chef-container">
-          <img src="/static/chef.png" alt="Pizza Chef" class="chef-image">
-          <div class="thought-bubble">
-              <img src="/static/thought-bubble.png" alt="Thought Bubble">
-              <div class="thought-bubble-text"
-                   style="position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);
-                          width:60%;text-align:center;color:#a14c1a;
-                          font-family:'Indie Flower',cursive,sans-serif;font-size:1.1em;line-height:1.2;font-weight:bold;">
-                  Get your math mitts on!
-              </div>
-          </div>
-      </div>
-      
     </div>
-  </div>
 
-  
-  <script>
-    // Initialize global variables
-    let currentQuestion = null;
-    let currentSlices = 1;
-    let pizzaSlices = [];
-
-    // DOM references for game logic
-    const fractionBox = document.getElementById("fractionBox");
-    const pizzaCanvas = document.getElementById("pizzaCanvas");
-    const ctx = pizzaCanvas.getContext("2d");
-    const lcmInput = document.getElementById("lcmInput");
-    const feedback = document.getElementById("feedback");
-    const convertPanel = document.getElementById("convertPanel");
-    const denomDisplay = document.getElementById("denominatorDisplay");
-    const convNum1 = document.getElementById("convNum1");
-    const convNum2 = document.getElementById("convNum2");
-    const convDen1 = document.getElementById("convDen1");
-    const convDen2 = document.getElementById("convDen2");
-    const toppingArea = document.getElementById("toppingArea");
-    const slicesContainer = document.getElementById("slicesContainer");
-
-
-    // Fetch a random question from backend
-    // Add to global variables
-    let orderHistory = [];
-    
-    // Modify the loadQuestion function
-    function loadQuestion() {
-        document.getElementById('nextQuestionBtn').style.display = 'none';
-        pizzaSlices = []; // Clear previous toppings
-        
-        // Reset all panels
-        lcmInputArea.style.display = "block";  // Ensure this line exists
-        convertPanel.style.display = "none";
-        toppingArea.style.display = "none";
-        
-        fetch('/question')
-          .then(res => {
-            if (!res.ok) throw new Error("Network response was not ok");
-            return res.json();
-          })
-          .then(q => {
-            if (q.done) {
-                window.location.href = "/celebration"; // or show a modal/page
-                return;
-            }
-            currentQuestion = q;
-            // Add to order history
-            orderHistory.push(q);
-            updateOrdersList(); // This line is CRUCIAL
-            fractionBox.innerHTML = `🔢 Problem: <strong>${q.n1}/${q.d1} ${q.topping1} + ${q.n2}/${q.d2} ${q.topping2}</strong>`;
-            lcmInput.value = '';
-            lcmInput.disabled = false;
-            feedback.textContent = '';
-            
-            // Hide both panels initially
-            toppingArea.style.display = "none";
-            convertPanel.style.display = "none";
-            
-            drawPizza(1);
-            redrawPizzaWithToppings();
-            
-            // Reset all conversion-related elements
-            document.getElementById("fracNum1").textContent = q.n1;
-            document.getElementById("fracDen1").textContent = q.d1;
-            document.getElementById("fracNum2").textContent = q.n2;
-            document.getElementById("fracDen2").textContent = q.d2;
-            document.getElementById("convDen1").textContent = "";
-            document.getElementById("convDen2").textContent = "";
-            convNum1.value = "";
-            convNum2.value = "";
-          })
-          .catch(err => {
-            fractionBox.innerHTML = "❌ Failed to load question. Is the backend running?";
-            console.error(err);
-          });
-    }
-
-    function gcd(a, b) { return b ? gcd(b, a % b) : a; }
-    function lcm(a, b) { return (a * b) / gcd(a, b); }
-
-    // Add this DOM reference at the top with other elements
-    const ordersList = document.getElementById('ordersList'); // Add this line
-    const lcmInputArea = document.getElementById("lcmInputArea");
-    
-    function checkLCM() {
-      if (!currentQuestion) return;
-      const d1 = currentQuestion.d1, d2 = currentQuestion.d2;
-      const correctLCM = lcm(d1, d2);
-      const userLCM = parseInt(lcmInput.value);
-      
-      if (userLCM === correctLCM) {
-        feedback.textContent = `✅ Correct! Now convert both fractions to denominator ${userLCM}.`;
-        lcmInput.disabled = true;
-        
-        // Update panel visibility
-        lcmInputArea.style.display = "none";    // Hide LCM input
-        convertPanel.style.display = "block";   // Show conversion
-        toppingArea.style.display = "none";     // Hide toppings
-        
-        drawPizza(correctLCM);  // Add this line
-        redrawPizzaWithToppings();
-        // Setup conversion values
-        denomDisplay.textContent = userLCM;
-        convDen1.textContent = userLCM;
-        convDen2.textContent = userLCM;
-        
-        // Set original fractions for conversion
-        document.getElementById("labelNum1").textContent = currentQuestion.n1;
-        document.getElementById("labelDen1").textContent = currentQuestion.d1;
-        document.getElementById("fracNum1").textContent = currentQuestion.n1;
-        document.getElementById("fracDen1").textContent = currentQuestion.d1;
-        document.getElementById("fracNum2").textContent = currentQuestion.n2;
-        document.getElementById("fracDen2").textContent = currentQuestion.d2;
-        
-        // Clear any previous conversion inputs
-        convNum1.value = "";
-        convNum2.value = "";
-      } else {
-        feedback.textContent = `❌ Nope! The correct number of slices is ${correctLCM}. Try again.`;
-        drawPizza(correctLCM);
-        redrawPizzaWithToppings();
-      }
-    }
-
-    function checkConversion() {
-      const userLCM = parseInt(denomDisplay.textContent);
-      const n1 = currentQuestion.n1, d1 = currentQuestion.d1;
-      const n2 = currentQuestion.n2, d2 = currentQuestion.d2;
-      
-      // Calculate expected converted numerators
-      const expectedNum1 = n1 * (userLCM / d1);
-      const expectedNum2 = n2 * (userLCM / d2);
-      
-      // Get user inputs
-      const userNum1 = parseInt(convNum1.value);
-      const userNum2 = parseInt(convNum2.value);
-  
-      if (userNum1 === expectedNum1 && userNum2 === expectedNum2) {
-          // Notify backend that conversion is complete
-          fetch('/validate_conversion', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({
-                  num1: userNum1,
-                  num2: userNum2
-              })
-          })
-          .then(res => res.json())
-          .then(() => {
-              feedback.textContent = "✅ Conversion correct! Now add toppings to match these fractions.";
-              convertPanel.style.display = "none";
-              toppingArea.style.display = "block";
-          });
-      } else {
-          feedback.textContent = "❌ Check your conversion and try again!";
-      }
-    }
-    // Draw pizza and toppings
-    function drawPizza(slices) {
-      currentSlices = slices;
-      pizzaSlices = Array.from({length: slices}, () => ({ toppings: [] }));
-      const angle = (2 * Math.PI) / slices;
-      ctx.clearRect(0, 0, pizzaCanvas.width, pizzaCanvas.height);
-      
-      // Add stroke styling
-      ctx.strokeStyle = "#795548";  // Brown color for crust
-      ctx.lineWidth = 3;
-      
-      for(let i = 0; i < slices; i++) {
-          ctx.beginPath();
-          ctx.moveTo(150, 150);
-          ctx.arc(150, 150, 130, i * angle, (i + 1) * angle);
-          ctx.closePath();
-          ctx.fillStyle = "#ffe0b2";
-          ctx.fill();
-          ctx.stroke();
-      }
-    }
-
-    function redrawPizzaWithToppings() {
-      const slices = pizzaSlices.length;
-      const angle = (2 * Math.PI) / slices;
-      
-      // Reset stroke style for redraws
-      ctx.strokeStyle = "#795548";
-      ctx.lineWidth = 3;
-      
-      ctx.clearRect(0, 0, pizzaCanvas.width, pizzaCanvas.height);
-      for(let i = 0; i < slices; i++) {
-        ctx.beginPath();
-        ctx.moveTo(150, 150);
-        ctx.arc(150, 150, 130, i * angle, (i + 1) * angle);
-        ctx.closePath();
-        ctx.fillStyle = "#ffe0b2";
-        ctx.fill();
-        ctx.stroke();
-
-        // Draw toppings for this slice
-        const toppings = pizzaSlices[i].toppings;
-        for (let j = 0; j < toppings.length; j++) {
-          const midAngle = (i + 0.5) * angle;
-          const r = 90 + 18 * j;
-          const x = 150 + r * Math.cos(midAngle);
-          const y = 150 + r * Math.sin(midAngle);
-          ctx.font = "24px serif";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(toppings[j], x, y);
-        }
-      }
-    }
-
-    // Make ingredient bins draggable
-    document.querySelectorAll('.ingredient-bin').forEach(bin => {
-      bin.addEventListener('dragstart', function(e) {
-        e.dataTransfer.setData('text/plain', this.dataset.emoji);
-        e.dataTransfer.effectAllowed = 'copy';
-      });
-    });
-
-    // Drag and drop onto pizza canvas
-    pizzaCanvas.addEventListener('dragover', function(e) {
-      e.preventDefault();
-    });
-    pizzaCanvas.addEventListener('drop', function(e) {
-      e.preventDefault();
-      const rect = pizzaCanvas.getBoundingClientRect();
-      const x = e.clientX - rect.left - 150;
-      const y = e.clientY - rect.top - 150;
-      const r = Math.sqrt(x*x + y*y);
-      if (r > 130) return;
-      let theta = Math.atan2(y, x);
-      if (theta < 0) theta += 2 * Math.PI;
-      const sliceIndex = Math.floor(theta / ((2 * Math.PI) / currentSlices));
-      const emoji = e.dataTransfer.getData('text/plain');
-      if (emoji && pizzaSlices[sliceIndex]) {
-        pizzaSlices[sliceIndex].toppings.push(emoji);
-        redrawPizzaWithToppings();
-      }
-    });
-
-    // Click to clear toppings from a slice
-    pizzaCanvas.addEventListener('click', function(e) {
-      const rect = pizzaCanvas.getBoundingClientRect();
-      const x = e.clientX - rect.left - 150;
-      const y = e.clientY - rect.top - 150;
-      const r = Math.sqrt(x*x + y*y);
-      if (r > 130) return;
-      let theta = Math.atan2(y, x);
-      if (theta < 0) theta += 2 * Math.PI;
-      const sliceIndex = Math.floor(theta / ((2 * Math.PI) / currentSlices));
-      if (pizzaSlices[sliceIndex]) {
-        pizzaSlices[sliceIndex].toppings = [];
-        redrawPizzaWithToppings();
-      }
-    });
-
-    // Check if toppings match expected sum fraction (distinct slices with topping)
-    // Add this with your other global variables
-    let currentScore = 0;
-    
-    // Add this function to update the score display
-    function updateScore(points) {
-        currentScore += points;
-        document.getElementById('score').textContent = currentScore;
-    }
-    
-    function showCelebration() {
-        document.getElementById('celebrationPopup').style.display = 'flex';
-    }
-
-    function closeCelebration() {
-        document.getElementById('celebrationPopup').style.display = 'none';
-        updateScore(50);
-    }
-
-    // Modify checkToppings() to use the celebration
-    
-    function checkToppings() {
-        const ovenAnimation = document.getElementById('ovenAnimation');
-        ovenAnimation.style.display = 'flex';
-        
-        setTimeout(() => {
-            if (!currentQuestion) return;
-            
-            fetch('/validate', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    question_id: currentQuestion.id,
-                    pizza_slices: pizzaSlices.map(slice => slice.toppings)
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                ovenAnimation.style.display = 'none';
-                if (data.correct) {
-                    showCelebration();
-                    feedback.textContent = '';
-                    toppingArea.style.display = "block";
-                    document.getElementById('nextQuestionBtn').style.display = 'inline-block';
-                } else {
-                    feedback.textContent = `❌ Try again! ${data.actual[Object.keys(data.actual)[0]]} vs ${data.expected[Object.keys(data.expected)[0]]}`;
-                }
-            });
-        }, 5000); // 2 second delay for animation
-    }
-
-    
-
-    // Draw initial pizza and fetch the first question
-    document.addEventListener('DOMContentLoaded', function() {
-        loadQuestion();
-        redrawPizzaWithToppings();
-    });
-
-    // Add this new function
-    function updateOrdersList() {
-        const ordersList = document.getElementById('ordersList');
-        ordersList.innerHTML = '';
-        
-        orderHistory.forEach((order, index) => {
-            const orderItem = document.createElement('div');
-            orderItem.className = 'order-item';
-            orderItem.innerHTML = `
-                <strong>Order #${index + 1}:</strong><br>
-                ${order.n1}/${order.d1} ${order.topping1} + 
-                ${order.n2}/${order.d2} ${order.topping2}
-            `;
-            ordersList.appendChild(orderItem);
-        });
-        
-        // Scroll to bottom
-        ordersList.scrollTop = ordersList.scrollHeight;
-    }
-</script>
-
-<div class="whiteboard-panel whiteboard-bottom">
-    <div class="whiteboard-title">✏️ Whiteboard</div>
-    <canvas id="whiteboard-canvas" width="220" height="320"></canvas>
-    <div class="whiteboard-controls">
-        <button class="whiteboard-btn" id="whiteboard-undo">Undo</button>
-        <button class="whiteboard-btn" id="whiteboard-clear">Clear</button>
+    <!-- Whiteboard Panel -->
+    <div class="whiteboard-panel whiteboard-bottom">
+        <div class="whiteboard-title">✏️ Whiteboard</div>
+        <canvas id="whiteboard-canvas" width="220" height="320"></canvas>
+        <div class="whiteboard-controls">
+            <button class="whiteboard-btn" id="whiteboard-undo">Undo</button>
+            <button class="whiteboard-btn" id="whiteboard-clear">Clear</button>
+        </div>
     </div>
-</div>
 
-<script src="/static/game.js"></script>
-<div id="celebrationPopup" class="celebration-popup" style="display:none;">
-    <div class="celebration-content">
-        <img src="/static/pizza-dance.gif" alt="Celebration Pizza Dance" class="pizza-dance-gif">
-        <h2>Perfect Pizza!</h2>
-        <p>You nailed the fractions!</p>
-        <button class="celebration-button" onclick="closeCelebration()">Claim 50 Points!</button>
+    <!-- Celebration Popup -->
+    <div id="celebrationPopup" class="celebration-popup" style="display:none;">
+        <div class="celebration-content">
+            <img src="/static/pizza-dance.gif" alt="Celebration Pizza Dance" class="pizza-dance-gif">
+            <h2>Perfect Pizza!</h2>
+            <p>You nailed the fractions!</p>
+            <button class="celebration-button" onclick="closeCelebration()">Claim 50 Points!</button>
+        </div>
     </div>
-</div>
 
-<div id="ovenAnimation" class="oven-animation">
-    <div class="oven-content">
-        <img src="/static/pizza-baking.gif" alt="Baking Pizza" class="oven-emoji">
-        <h2>Baking in the oven...</h2>
-        <p>Checking your pizza perfection!</p>
+    <!-- Oven Animation -->
+    <div id="ovenAnimation" class="oven-animation">
+        <div class="oven-content">
+            <img src="/static/pizza-baking.gif" alt="Baking Pizza" class="oven-emoji">
+            <h2>Baking in the oven...</h2>
+            <p>Checking your pizza perfection!</p>
+        </div>
     </div>
-</div>
 
+    <!-- Scripts -->
+    <script src="/static/js/pizza-game.js"></script>
+    <script src="/static/js/game.js"></script>
 </body>
 </html>
-
