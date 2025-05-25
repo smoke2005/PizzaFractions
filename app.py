@@ -23,38 +23,47 @@ QUESTIONS = [
         "id": 2,
         "n1": 2, "d1": 3, "topping1": "🍄",  # mushroom
         "n2": 1, "d2": 6, "topping2": "🧀"   # cheese
-    },
-    {
-        "id": 3,
-        "n1": 3, "d1": 5, "topping1": "🍅",  # tomato
-        "n2": 1, "d2": 5, "topping2": "🍗"   # chicken
     }
 ]
 @app.route('/')
 def landing():
-    return render_template('intro.html')  # Changed from index.html
+    return render_template('intro.html')
 
 @app.route('/game')
 def game():
-    return render_template('index.html')  # Main game now at /game endpoint
+    session['question_index'] = 0  # Reset question index when starting a new game
+    session.modified = True
+    return render_template('index.html')
 
-# Add these fallback routes
+@app.route('/celebration')
+def celebration():
+    return render_template('celebration.html')
+
+# Fallback route should be last
 @app.route('/<path:text>', methods=['GET', 'POST'])
 def all_routes(text):
     if text.startswith('static/'):
         return send_from_directory(app.static_folder, text[7:])
-    return render_template('intro.html')  # Fallback to intro page
+    # Only fallback if not a known route
+    if text not in ['game']:
+        return render_template('intro.html')
+    # Optionally, you could return a 404 for truly unknown paths
+    return '', 404
 
 @app.route('/question', methods=['GET'])
 def get_question():
     global QUESTIONS
     session.pop('conversion_done', None)  # Reset conversion state for new question
-    # Make a copy of the list to avoid modifying original
-    available = QUESTIONS.copy()
-    if hasattr(g, 'previous_question'):
-        available = [q for q in available if q['id'] != g.previous_question]
-    q = random.choice(available)
-    g.previous_question = q['id']
+
+    idx = session.get('question_index', 0)
+
+    if idx >= len(QUESTIONS):
+        # All questions done, return a JSON flag
+        return jsonify({"done": True})
+
+    q = QUESTIONS[idx]
+    session['question_index'] = idx + 1
+    session.modified = True
     return jsonify(q)
 
 @app.route('/lcm', methods=['POST'])
@@ -67,18 +76,7 @@ def calc_lcm():
 
 @app.route('/validate', methods=['POST'])
 def validate_toppings():
-    """
-    Expects JSON:
-    {
-        "question_id": int,
-        "pizza_slices": [
-            ["🫑"],         # toppings on slice 0
-            ["🥓", "🫑"],   # toppings on slice 1
-            [],            # toppings on slice 2
-            ...
-        ]
-    }
-    """
+    
     data = request.json
     question_id = data.get('question_id')
     pizza_slices = data['pizza_slices']

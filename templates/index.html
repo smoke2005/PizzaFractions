@@ -74,11 +74,19 @@
           <img src="/static/chef.png" alt="Pizza Chef" class="chef-image">
           <div class="thought-bubble">
               <img src="/static/thought-bubble.png" alt="Thought Bubble">
+              <div class="thought-bubble-text"
+                   style="position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);
+                          width:60%;text-align:center;color:#a14c1a;
+                          font-family:'Indie Flower',cursive,sans-serif;font-size:1.1em;line-height:1.2;font-weight:bold;">
+                  Get your math mitts on!
+              </div>
           </div>
       </div>
       
     </div>
   </div>
+
+  
   <script>
     // Initialize global variables
     let currentQuestion = null;
@@ -121,6 +129,10 @@
             return res.json();
           })
           .then(q => {
+            if (q.done) {
+                window.location.href = "/celebration"; // or show a modal/page
+                return;
+            }
             currentQuestion = q;
             // Add to order history
             orderHistory.push(q);
@@ -343,10 +355,6 @@
         document.getElementById('score').textContent = currentScore;
     }
     
-    // Remove score updates from checkLCM() and checkConversion()
-    // Only keep it in checkToppings() success case:
-    
-    // Add these functions with your other game logic
     function showCelebration() {
         document.getElementById('celebrationPopup').style.display = 'flex';
     }
@@ -416,6 +424,16 @@
         ordersList.scrollTop = ordersList.scrollHeight;
     }
 </script>
+
+<div class="whiteboard-panel whiteboard-bottom">
+    <div class="whiteboard-title">✏️ Whiteboard</div>
+    <canvas id="whiteboard-canvas" width="220" height="320"></canvas>
+    <div class="whiteboard-controls">
+        <button class="whiteboard-btn" id="whiteboard-undo">Undo</button>
+        <button class="whiteboard-btn" id="whiteboard-clear">Clear</button>
+    </div>
+</div>
+
 <script src="/static/game.js"></script>
 <div id="celebrationPopup" class="celebration-popup" style="display:none;">
     <div class="celebration-content">
@@ -425,10 +443,7 @@
         <button class="celebration-button" onclick="closeCelebration()">Claim 50 Points!</button>
     </div>
 </div>
-</body>
-</html>
 
-<!-- Add oven animation div before closing body -->
 <div id="ovenAnimation" class="oven-animation">
     <div class="oven-content">
         <img src="/static/pizza-baking.gif" alt="Baking Pizza" class="oven-emoji">
@@ -436,5 +451,7 @@
         <p>Checking your pizza perfection!</p>
     </div>
 </div>
+
 </body>
 </html>
+

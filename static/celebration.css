@@ -1,0 +1,95 @@
+body {
+    background: url('/static/intro-bg.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 0;
+    pointer-events: none;
+}
+.celebration-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+.badge-image {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: #fff8e1;
+    box-shadow: 0 0 32px 8px #ffd54f, 0 0 0 8px #fff8e1;
+    border: 6px solid #e6b07a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto 20px auto;
+    animation: badge-glow 2s infinite alternate, badge-float 3s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+.badge-image img {
+    width: 94%;
+    height: 94%;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 4px 12px #ffecb3);
+    user-select: none;
+    pointer-events: none;
+}
+@keyframes badge-glow {
+    0% {
+        box-shadow: 0 0 32px 8px #ffd54f, 0 0 0 8px #fff8e1;
+    }
+    100% {
+        box-shadow: 0 0 64px 16px #ffe082, 0 0 0 8px #fff8e1;
+    }
+}
+@keyframes badge-float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+    100% { transform: translateY(0); }
+}
+.celebration-message {
+    text-align: center;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    color: #a14c1a;
+    font-size: 2.2em;
+    margin-top: 20px;
+}
+.celebration-sub {
+    text-align: center;
+    font-family: 'Indie Flower', cursive, sans-serif;
+    color: #b97a56;
+    font-size: 1.3em;
+    margin-bottom: 30px;
+}
+.restart-btn {
+    display: block;
+    margin: 10px auto 0 auto;
+    background: #e6b07a;
+    color: #a14c1a;
+    border: 2px solid #b97a56;
+    border-radius: 18px;
+    font-family: 'Fredoka One', cursive, sans-serif;
+    font-size: 1.2em;
+    padding: 14px 38px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px #b97a5633;
+    transition: background 0.2s, transform 0.1s;
+}
+.restart-btn:hover {
+    background: #f5d6b2;
+    transform: scale(1.07);
+}
