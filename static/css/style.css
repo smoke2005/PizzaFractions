@@ -17,9 +17,9 @@ body {
     box-shadow: 0 2px 8px #b97a5633;
   }
   .background-container {
-    background: url('/static/bg-pattern.png') no-repeat top center; /* Position image at the top center */
-    background-size: 100% 420px; /* Set specific width and reduced height */
-    padding: 32px 0; /* Add padding for spacing */
+    background: url('/static/bg-pattern.png') no-repeat top center; 
+    background-size: 100% 420px; 
+    padding: 32px 0; 
   }
   
   .main-area {
@@ -29,7 +29,6 @@ body {
     gap: 50px;
     margin: 0 auto;
     max-width: 1300px;
-    /* Remove background image from here */
   }
   .ingredient-area {
     display: grid;
@@ -77,16 +76,16 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
-    background: url('/static/pizza-board.png') no-repeat center -100px; /* Adjust position to center */
-    background-size: 600px 600px; /* Ensure the image fits the area */
+    background: url('/static/pizza-board.png') no-repeat center -100px; 
+    background-size: 600px 600px;
     height: 500px;
-    width: 500px; /* Match canvas width */
+    width: 500px;
     margin: -20px 0 -20px ;
-    z-index: 1; /* Set z-index to ensure it is above the background */
+    z-index: 1; 
 }
 
   .pizza-peel {
-    display: none; /* Hide the existing pizza peel */
+    display: none; 
   }
   canvas {
     background: radial-gradient(circle at 60% 60%, #ffe0b3 80%, #ffd180 100%);
@@ -142,7 +141,7 @@ body {
     color: #a14c1a;
     min-height: 32px;
   }
-  /* Slices styling can be further customized for hand-drawn look */
+  
   .slice {
     display: inline-block;
     width: 32px;
@@ -165,32 +164,28 @@ body {
     100% { transform: scale(1); }
   }
   
-  /* Add these rules to improve conversion panel visibility */
+
   #convertPanel {
     margin: 20px 0;
     padding: 15px;
     background: #fff3e0;
     border-radius: 12px;
   }
-  
-  /* Better visual hierarchy for conversion inputs */
+
   #convertPanel input[type=number] {
     width: 50px;
     margin: 0 5px;
   }
   
-  /* Clearer visual feedback for disabled elements */
   #lcmInputArea[disabled], #convertPanel[disabled] {
     opacity: 0.6;
     pointer-events: none;
   }
-  
-  /* Add smooth transitions for panel changes */
+
   #lcmInputArea, #convertPanel, #toppingArea {
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
-  
-  /* Better spacing for conversion elements */
+
   .conversion-row {
     margin: 10px 0;
   }
@@ -360,7 +355,7 @@ body {
 }
 .main-area {
     display: flex;
-    justify-content: flex-start; /* Changed from center to flex-start */
+    justify-content: flex-start; 
     align-items: flex-start;
     gap: 50px;
     margin: 0 auto;
@@ -376,7 +371,7 @@ body {
     width: 200px;
     height: 300px;
     box-shadow: 0 2px 8px #b97a5633;
-    margin-right: 0; /* Set margin-right to 0 to move further left */
+    margin-right: 0; 
 }
 
 .pizza-area {
@@ -388,7 +383,7 @@ body {
     background-size: 600px 600px;
     height: 500px;
     width: 500px;
-    margin: -20px 0 -20px -30px; /* Adjusted left margin to move right */
+    margin: -20px 0 -20px -30px; 
     z-index: 1;
 }
 
@@ -402,7 +397,7 @@ body {
     border-radius: 18px;
     padding: 18px;
     box-shadow: 0 2px 8px #b97a5633;
-    margin: 20px 0 -20px 30px; /* Further added margin-left to move left */
+    margin: 20px 0 -20px 30px; 
 }
 
 .orders-container h3 {
@@ -428,7 +423,6 @@ body {
     border: 2px solid #e6b07a;
 }
 
-/* Add these new styles at the bottom */
 .oven-animation {
     position: fixed;
     top: 0;
@@ -453,8 +447,7 @@ body {
 .oven-emoji {
     width: 100px;
     height: 100px;
-    /* Remove animation to keep the gif static */
-    /* animation: bake 2s ease-in-out infinite; */
+
 }
 
 @keyframes bake {
@@ -474,7 +467,6 @@ body {
     to { transform: scale(1.2) rotate(-5deg); }
 }
 
-/* Keep your existing styles below */
 .pizza-shop-header {
     font-family: 'Fredoka One', cursive;
     font-size: 2.5rem;
@@ -490,7 +482,6 @@ body {
     text-align: center;
 }
 
-/* Add overlay for better text readability */
 .intro-container::before {
     content: '';
     position: absolute;
@@ -498,11 +489,10 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(249, 230, 211, 0.7);  /* Changed from 0.85 to 0.7 */
+    background: rgba(249, 230, 211, 0.7); 
     z-index: 1;
 }
 
-/* For more opacity (less background visibility), use 0.9+ value instead */
 .intro-content {
     position: relative;
     z-index: 2;
@@ -516,8 +506,8 @@ body {
 
 .intro-container h1 {
     position: relative;
-    z-index: 3; /* Higher than overlay's z-index */
-    color: #b97a56;  /* Brighter orange color */
+    z-index: 3; 
+    color: #b97a56;
     text-shadow: 2px 2px 4px rgba(255, 255, 210, 0.8),
                  0 0 20px rgba(255, 165, 0, 0.5);
     font-family: 'Fredoka One', cursive;
@@ -578,7 +568,6 @@ body {
     position: relative;
 }
 
-/* Add spacing to dragged ingredients */
 .draggable-ingredient {
     margin: 8px;
     transform: translate(calc(-50% + 5px), calc(-50% + 5px));
@@ -588,7 +577,6 @@ body {
     overflow: visible;
 }
 
-/* Auto-placement positions */
 .ingredient-clone {
     position: absolute;
     animation: ingredientSpread 0.5s ease-out;
@@ -606,7 +594,6 @@ body {
     }
 }
 
-/* Generate random spread positions using CSS variables */
 .ingredient-clone:nth-child(1) { --tx: 8px; --ty: -5px; }
 .ingredient-clone:nth-child(2) { --tx: -6px; --ty: 7px; }
 .ingredient-clone:nth-child(3) { --tx: 5px; --ty: 6px; }
