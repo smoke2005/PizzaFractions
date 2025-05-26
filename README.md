@@ -1,4 +1,4 @@
-### PizzaFractions
+# PizzaFractions
 
 ## Inspiration
 As someone who struggled with fractions as a kid, I wanted to create a tool that turns something intimidating into something exciting. Pizza Fraction Party was born from the idea of making math feel like a game, not a test. What better way to learn fractions than by slicing up your favorite food—pizza! The goal was to help middle schoolers visualize fractions in a fun, interactive way that doesn’t feel like “studying” at all.
