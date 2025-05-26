@@ -7,7 +7,7 @@ function handleIngredientDrop(event, sliceElement) {
     const ingredient = event.dataTransfer.getData("text/plain");
     const clones = 4;
     
-    // Clear existing clones first
+
     while(sliceElement.firstChild) {
         sliceElement.removeChild(sliceElement.firstChild);
     }
@@ -23,7 +23,7 @@ function handleIngredientDrop(event, sliceElement) {
         clone.style.transform = `rotate(${Math.random() * 25 - 12.5}deg)`;
         clone.style.zIndex = 1000 + i;
         
-        document.body.appendChild(clone); // Add to body instead of slice
+        document.body.appendChild(clone); 
         
         setTimeout(() => clone.remove(), 5000);
     }
